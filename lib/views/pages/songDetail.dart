@@ -22,16 +22,23 @@ class _SongDetailState extends State<SongDetail> {
   String _lirik = "";
   String _no = "";
   @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var data = _query.getSong(widget.no);
-    // data.then((value) => {
-    //       setState(() {
-    //         _no = widget.no;
-    //         _judul = '${widget.no}. ${value.judul}';
-    //         _kategori = '(${value.kategori})';
-    //         _lirik = value.lirik;
-    //       })
-    //     });
+    data.then((value) => {
+          setState(() {
+            _no = widget.no;
+            _judul = '${widget.no}. ${value.judul}';
+            _kategori = '(${value.kategori})';
+            _lirik = value.lirik;
+          })
+        });
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -49,31 +56,20 @@ class _SongDetailState extends State<SongDetail> {
         child: Icon(Icons.share),
         backgroundColor: colorPrimaryDark,
       ),
-      body: FutureBuilder<SongModel>(
-        future: data,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: Text('Loading Data...'));
-          } else {
-            if (snapshot.hasError)
-              return Center(child: Text('Error: ${snapshot.error}'));
-            else {
-              return SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 15.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        '${widget.no}.' + snapshot.data.judul,
-                        style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold),
-                      ),
-                      Html(data: snapshot.data.lirik)
-                    ],
-                  ));
-            }
-          }
-        },
-      ),
+      body: _judul == ""
+          ? Center(child: Text('Loading Data...'))
+          : SingleChildScrollView(
+              padding: EdgeInsets.only(top: 15.0),
+              child: Column(
+                children: [
+                  Text(
+                    '${widget.no}.' + _judul,
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  Html(data: _lirik)
+                ],
+              )),
     );
   }
 }
