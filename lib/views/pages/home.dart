@@ -37,6 +37,7 @@ class HomePage extends StatelessWidget {
           ];
         },
         body: Container(
+          padding: EdgeInsets.only(left: 10.0, right: 10.0),
           color: lightgray,
           child: MyGridView(gridMenu: gridmenu),
         ),

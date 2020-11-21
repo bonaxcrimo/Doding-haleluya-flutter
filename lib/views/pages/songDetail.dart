@@ -1,8 +1,6 @@
 import 'package:first/dao/dodingDao.dart';
-import 'package:first/models/SongModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:share/share.dart';
 
 import '../../configuration.dart';
@@ -18,7 +16,6 @@ class SongDetail extends StatefulWidget {
 class _SongDetailState extends State<SongDetail> {
   DodingDao _query = new DodingDao();
   String _judul = "";
-  String _kategori = "";
   String _lirik = "";
   String _no = "";
   @override
@@ -35,7 +32,6 @@ class _SongDetailState extends State<SongDetail> {
           setState(() {
             _no = widget.no;
             _judul = '${widget.no}. ${value.judul}';
-            _kategori = '(${value.kategori})';
             _lirik = value.lirik;
           })
         });

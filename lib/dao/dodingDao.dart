@@ -29,4 +29,17 @@ class DodingDao {
     SongModel song = res.isNotEmpty ? SongModel.fromJson(res.first) : null;
     return song;
   }
+
+  Future<List<SongModel>> getSongByText(String txt, [int islirik = 0]) async {
+    var db = await instance.database;
+    String where = " where judul like  '%$txt%'  ";
+    if (islirik == 1) {
+      where += " or lirik like  '%$txt%'  ";
+    }
+    var res = await db
+        .rawQuery("select no,judul,kategori from doding $where order by no");
+    List<SongModel> list =
+        res.isNotEmpty ? res.map((c) => SongModel.fromJson(c)).toList() : null;
+    return list;
+  }
 }

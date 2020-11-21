@@ -20,7 +20,7 @@ class MyGridView extends StatelessWidget {
             children: gridMenu.map((grid) {
               return Card(
                 elevation: 2.5,
-                margin: EdgeInsets.all(20.0),
+                margin: EdgeInsets.all(12.5),
                 child: InkWell(
                   child: getCardByTitle(grid.name, grid.icon, grid.warna),
                   onTap: () {
